@@ -1,0 +1,9 @@
+apiVersion: vrtn14.vrtn14.sr/v1alpha1
+kind: SeueurImageWatcher
+metadata:
+  labels:
+    app.kubernetes.io/name: k8s-seueur-image-watcher
+    app.kubernetes.io/managed-by: kustomize
+  name: seueurimagewatcher-sample
+spec:
+  # TODO(user): Add fields here

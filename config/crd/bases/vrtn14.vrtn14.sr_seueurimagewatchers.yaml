@@ -1,0 +1,134 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.18.0
+  name: seueurimagewatchers.vrtn14.vrtn14.sr
+spec:
+  group: vrtn14.vrtn14.sr
+  names:
+    kind: SeueurImageWatcher
+    listKind: SeueurImageWatcherList
+    plural: seueurimagewatchers
+    singular: seueurimagewatcher
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .spec.image
+      name: Image
+      type: string
+    - jsonPath: .spec.tag
+      name: Tag
+      type: string
+    - jsonPath: .spec.updatePolicy
+      name: Policy
+      type: string
+    - jsonPath: .status.lastDigest
+      name: Last Digest
+      type: string
+    - jsonPath: .status.lastChecked
+      name: Last Checked
+      type: string
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: SeueurImageWatcher is the Schema for the seueurimagewatchers
+          API
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: SeueurImageWatcherSpec defines the desired state of SeueurImageWatcher
+            properties:
+              authRef:
+                description: AuthRef references a Docker registry secret
+                properties:
+                  name:
+                    type: string
+                required:
+                - name
+                type: object
+              image:
+                description: Image is the full image name without tag (e.g. ghcr.io/angga/backend)
+                type: string
+              intervalSeconds:
+                description: 'IntervalSeconds defines how often to check for updates
+                  (default: 600)'
+                type: integer
+              tag:
+                description: Tag to monitor (e.g. production, latest)
+                type: string
+              targetRef:
+                description: TargetRef specifies the workload to update
+                properties:
+                  kind:
+                    description: 'Kind: Deployment, StatefulSet, or DaemonSet'
+                    type: string
+                  name:
+                    description: Name of the workload
+                    type: string
+                  namespace:
+                    description: Namespace of the workload
+                    type: string
+                required:
+                - kind
+                - name
+                - namespace
+                type: object
+              updatePolicy:
+                description: 'UpdatePolicy: static, semver, or none'
+                type: string
+              webhookRef:
+                description: WebhookRef references a webhook configuration
+                properties:
+                  name:
+                    type: string
+                required:
+                - name
+                type: object
+            required:
+            - image
+            - tag
+            - targetRef
+            - updatePolicy
+            type: object
+          status:
+            description: SeueurImageWatcherStatus defines the observed state of SeueurImageWatcher
+            properties:
+              lastChecked:
+                description: LastChecked is when the image was last checked
+                format: date-time
+                type: string
+              lastDigest:
+                description: LastDigest is the last observed image digest
+                type: string
+              lastNotified:
+                description: LastNotified is when a notification was last sent
+                format: date-time
+                type: string
+              lastUpdated:
+                description: LastUpdated is when the workload was last updated
+                format: date-time
+                type: string
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

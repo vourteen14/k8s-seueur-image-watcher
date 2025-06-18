@@ -1,0 +1,76 @@
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: manager-role
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - secrets
+  verbs:
+  - get
+- apiGroups:
+  - apps
+  resources:
+  - daemonsets
+  - deployments
+  - statefulsets
+  verbs:
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - vrtn14.sr
+  resources:
+  - seueurimagewatchers
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - vrtn14.sr
+  resources:
+  - seueurimagewatchers/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - vrtn14.sr
+  resources:
+  - seueurimagewatchers/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - vrtn14.vrtn14.sr
+  resources:
+  - seueurwebhookconfigs
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - vrtn14.vrtn14.sr
+  resources:
+  - seueurwebhookconfigs/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - vrtn14.vrtn14.sr
+  resources:
+  - seueurwebhookconfigs/status
+  verbs:
+  - get
+  - patch
+  - update

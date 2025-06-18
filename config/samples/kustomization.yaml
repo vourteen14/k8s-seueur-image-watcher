@@ -1,0 +1,5 @@
+## Append samples of your project ##
+resources:
+- vrtn14_v1alpha1_seueurimagewatcher.yaml
+- vrtn14_v1alpha1_seueurwebhookconfig.yaml
+# +kubebuilder:scaffold:manifestskustomizesamples
